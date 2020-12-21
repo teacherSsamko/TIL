@@ -1,3 +1,8 @@
+"""
+list.append() 보다
+list[i]로 값을 update하는 것이 빠르다.
+"""
+
 n, lst = int(input()), list(map(int, input().split()))
 
 result = [0 for i in range(n)]
