@@ -1,19 +1,21 @@
 N, L, K = list(map(int, input().split()))
 score = 0
-quiz = []
+quiz = {}
 for _ in range(N):
     sub1, sub2 = list(map(int, input().split()))
-    quiz.append((sub1, sub2))
+    quiz[(sub1, sub2)] = 0
 
-quiz.sort(key=lambda x: x[1])
+# quiz.sort(key=lambda x: x[1])
+for q in quiz.keys():
+    if q[1] <= L:
+        quiz[q] = 140
+    elif q[0] <= L:
+        quiz[q] = 100
 
+r_score = list(quiz.values())
 
+r_score.sort(reverse=True)
 for i in range(K):
-    sub1, sub2 = quiz[i]
-    if sub2 <= L:
-        score += 140
-    elif sub1 <= L:
-        score += 100
-    else:
-        continue
+    score += r_score[i]
+
 print(score)
