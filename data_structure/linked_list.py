@@ -22,3 +22,24 @@ while node.next:
     print(node.data)
     node = node.next
 print(node.data)
+
+# lec2
+
+node = head
+node3 = Node(3.5)
+search = True
+while search:
+    if node.data == 3:
+        search = False
+    else:
+        node = node.next
+
+node_next = node.next
+node.next = node3
+node3.next = node_next
+
+node = head
+while node.next:
+    print(node.data)
+    node = node.next
+print(node.data)
