@@ -10,6 +10,8 @@ def hash_func(key):
 
 
 def save_data(data, value):
+    index_key = get_key(data)
+
     hash_address = hash_func(get_key(data))
     hash_table[hash_address] = value
 
