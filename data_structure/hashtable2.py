@@ -11,13 +11,27 @@ def hash_func(key):
 
 def save_data(data, value):
     index_key = get_key(data)
-
-    hash_address = hash_func(get_key(data))
-    hash_table[hash_address] = value
+    hash_address = hash_func(index_key)
+    if hash_table[hash_address] != 0:
+        for idx in range(len(hash_table[hash_address])):
+            if hash_table[hash_address][idx][0] == index_key:
+                hash_table[hash_address][idx][1] = value
+                return
+        hash_table[hash_address].append([index_key, value])
+    else:
+        hash_table[hash_address] = [index_key, value]
 
 
 def read_data(data):
-    hash_address = hash_func(get_key(data))
+    index_key = get_key(data)
+    hash_address = hash_func(index_key)
+    if hash_table[hash_address] != 0:
+        for idx in range(len(hash_table[hash_address])):
+            if hash_table[hash_address][idx][0] == index_key:
+                return hash_table[hash_address][idx][1]
+        return None
+    else:
+        return None
     return hash_table[hash_address]
 
 
