@@ -1,3 +1,4 @@
+# Chaining
 hash_table = [0 for i in range(8)]
 
 
