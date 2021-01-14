@@ -6,7 +6,7 @@ class Node:
 
 
 class NodeManager:
-    def __init__(self, head):
+    def __init__(self, root):
         self.root = root
 
     def insert(self, value):
