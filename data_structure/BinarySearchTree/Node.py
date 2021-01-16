@@ -26,12 +26,11 @@ class NodeManager:
                     break
 
     def search(self, value):
-        self.current_node = self.head
+        self.current_node = self.root
         while self.current_node:
             if self.current_node.value == value:
                 return True
-            elif:
-                value < self.current_node.value:
+            elif value < self.current_node.value:
                 self.current_node = self.current_node.left
             else:
                 self.current_node = self.current_node.right
