@@ -30,3 +30,68 @@ class Heap:
             inserted_idx = parent_idx
 
         return True
+
+    def move_down(self, popped_idx):
+        if len(self.heap_array) <= 1:
+            return False
+
+        left_child_popped_idx = popped_idx * 2
+        right_child_popped_idx = popped_idx * 2 + 1
+
+        # CASE 1: has no child node
+        if left_child_popped_idx >= len(self.heap_array):
+            return False
+        # CASE 2: has only one(left) child
+        elif right_child_popped_idx >= len(self.heap_array):
+            if self.heap_array[popped_idx] < self.heap_array[left_child_popped_idx]:
+                return True
+            else:
+                return False
+        # CASE 3: has 2 children
+        else:
+            # CASE 3-1: compare between children
+            if self.heap_array[left_child_popped_idx] > self.heap_array[right_child_popped_idx]:
+                if self.heap_array[popped_idx] < self.heap_array[left_child_popped_idx]:
+                    return True
+                else:
+                    return False
+            else:
+                if self.heap_array[popped_idx] < self.heap_array[right_child_popped_idx]:
+                    return True
+                else:
+                    return False
+
+    def pop(self):
+        if len(self.heap_array) <= 1:
+            return None
+
+        returned_data = self.heap_array[1]
+        self.heap_array[1] = self.heap_array[-1]
+        del self.heap_array[-1]
+        popped_idx = 1
+
+        while self.move_down(popped_idx):
+            left_child_popped_idx = popped_idx * 2
+            right_child_popped_idx = popped_idx * 2 + 1
+
+            # CASE 2: has only one(left) child
+            if right_child_popped_idx >= len(self.heap_array):
+                if self.heap_array[popped_idx] < self.heap_array[left_child_popped_idx]:
+                    self.heap_array[popped_idx], self.heap_array[left_child_popped_idx] = self.heap_array[
+                        left_child_popped_idx], self.heap_array[popped_idx]
+                    popped_idx = left_child_popped_idx
+            # CASE 3: has 2 children
+            else:
+                # CASE 3-1: compare between children
+                if self.heap_array[left_child_popped_idx] > self.heap_array[right_child_popped_idx]:
+                    if self.heap_array[popped_idx] < self.heap_array[left_child_popped_idx]:
+                        self.heap_array[popped_idx], self.heap_array[left_child_popped_idx] = self.heap_array[
+                            left_child_popped_idx], self.heap_array[popped_idx]
+                        popped_idx = left_child_popped_idx
+                else:
+                    if self.heap_array[popped_idx] < self.heap_array[right_child_popped_idx]:
+                        self.heap_array[popped_idx], self.heap_array[right_child_popped_idx] = self.heap_array[
+                            right_child_popped_idx], self.heap_array[popped_idx]
+                        popped_idx = right_child_popped_idx
+
+        return returned_data
