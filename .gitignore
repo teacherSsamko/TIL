@@ -1,3 +1,6 @@
 study_env/
 telegrambot_study.py
 venv/
+*.mod
+*.sum
+*.pyc
