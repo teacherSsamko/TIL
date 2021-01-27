@@ -21,10 +21,12 @@ def merge(left, right):
         else:
             data.append(right[rp])
             rp += 1
+
+    # add the rest of left, right
     data += left[lp:]
     data += right[rp:]
     return data
 
 
-sample = random.sample(range(100), 8)
+sample = random.sample(range(100), 10)
 print(merge_split(sample))
