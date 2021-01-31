@@ -1,5 +1,3 @@
-import random
-
 graph = dict()
 
 graph['A'] = ['B', 'C']
