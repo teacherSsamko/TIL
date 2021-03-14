@@ -13,14 +13,8 @@ find lowest battery consume way and get how much battery needed
 
 
 def solution(n):
-    ans = 0
-    while n:
-        if n % 2:
-            ans += 1
-        n = n // 2
-
-    return ans
+    return bin(n).count("1")
 
 
-n = int(input())
+n = 5000
 print(solution(n))
