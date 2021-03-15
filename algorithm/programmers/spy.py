@@ -9,6 +9,13 @@ def solution(clothes):
     return answer - 1
 
 
+def solution2(clothes):
+    from collections import Counter
+    from functools import reduce
+    cnt = Counter([kind for item, kind in clothes])
+    return reduce(lambda x, y: x*(y+1), cnt.values(), 1) - 1
+
+
 clothes = [["yellowhat", "headgear"], [
     "bluesunglasses", "eyewear"], ["green_turban", "headgear"]]
-print(solution(clothes))
+print(solution2(clothes))
