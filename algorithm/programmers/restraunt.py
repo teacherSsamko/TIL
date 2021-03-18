@@ -1,34 +1,23 @@
 def solution(n, weak, dist):
-    def get_dist(n1, n2):
-        return min(abs(n1 - n2), n1 + 12 - n2)
-    import heapq
-    answer = 0
-    friends_n = len(dist)
-    to_check = len(weak)
-    checked = 0
-    edges = []
-    for i in range(to_check):
-        if i == to_check - 1:
-            edges.append((get_dist(weak[0], weak[i]), weak[0], weak[i]))
-        else:
-            edges.append((get_dist(weak[i], weak[i+1]), weak[i], weak[i + 1]))
-    print(edges)
+    from itertools import permutations
+    L = len(weak)
+    cand = []
+    weak_points = weak + [w+n for w in weak]
+    for i, start in enumerate(weak):
+        for friends in permutations(dist):
+            count = 1
+            position = start
+            for friend in friends:
+                position += friend
+                if position < weak_points[i + L - 1]:
+                    count += 1
+                    postion = [w for w in weak_points[i+1:i+L]
+                               if w > position][0]
+                else:
+                    cand.append(count)
+                    break
 
-    heapq.heapify(edges)
-    print(edges)
-    while checked < to_check:
-        edge = heapq.heappop(edges)
-        length = edge[0]
-        for i in range(len(dist)):
-            if dist[i] > length:
-                answer += 1
-                checked += 2
-                break
-        del dist[i]
-
-    print(dist)
-
-    return answer
+    return min(cand) if cand else -1
 
 
 n = 12
