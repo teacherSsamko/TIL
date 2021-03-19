@@ -1,10 +1,7 @@
 def solution(N, M):
     N = {k: 1 for k in N}
     for m in M:
-        if N.get(m):
-            print(1)
-        else:
-            print(0)
+        print(N.get(m, 0))
 
     return
 
