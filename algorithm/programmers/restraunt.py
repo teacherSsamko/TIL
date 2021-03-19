@@ -1,4 +1,4 @@
-def solution(n, weak, dist):
+def solution1(n, weak, dist):
     from itertools import permutations
     L = len(weak)
     cand = []
@@ -20,8 +20,37 @@ def solution(n, weak, dist):
     return min(cand) if cand else -1
 
 
+def solution(n, weak, dist):
+    W = len(weak)
+    repair_l = [()]
+    answer = 0
+    dist.sort(reverse=True)
+
+    for can_move in dist:
+        repairs = []
+        answer += 1
+
+        for i, wp in enumerate(weak):
+            start = wp
+            ends = weak[i:] + [w + n for w in weak[:i]]
+            can = [end % n for end in ends if end - start <= can_move]
+            repairs.append(set(can))
+        # print(repairs)
+
+        cand = set()
+        for r in repairs:
+            for x in repair_l:
+                new = r | set(x)
+                if len(new) == W:
+                    print('ok', r, set(x))
+                    return answer
+                cand.add(tuple(new))
+        repair_l = cand
+        print(repair_l)
+
+
 n = 12
 weak = [1, 3, 4, 9, 10]
-dist = [3, 5, 7]
+dist = [1, 2, 3, 4]
 ans = 1
 print(solution(n, weak, dist))
