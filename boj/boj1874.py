@@ -1,26 +1,21 @@
 def solution(n, num_array):
     print(num_array)
-    ns = [x for x in range(1, n+1)]
-    print(ns)
-    stack = [ns.pop(0)]
-    goal = []
-    answer = ['+']
-    cursor = 0
-    while goal != num_array:
-        if stack and stack[-1] == num_array[cursor]:
-            goal.append(stack.pop())
+    stack = []
+    answer = []
+    count = 1
+    for i in range(1, n + 1):
+        target = num_array[i]
+        while target >= count:
+            stack.append(count)
+            answer.append("+")
+            count += 1
+        if stack[-1] == target:
+            stack.pop()
             answer.append('-')
-            cursor += 1
-        elif ns:
-            stack.append(ns.pop(0))
-            answer.append('+')
         else:
-            answer = ["NO"]
-            break
-    print(goal)
-    print(stack)
-    for ans in answer:
-        print(ans)
+            print("NO")
+            return
+    print("\n".join(answer))
     return
 
 
