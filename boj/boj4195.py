@@ -1,33 +1,43 @@
-def DFS(network, start):
-    need_visit = list()
-    visited = list()
 
-    need_visit.append(start)
+def find(z, parent):
+    if z == parent[z]:
+        return z
+    else:
+        p = find(parent[z], parent)
+        parent[z] = p
+        return parent[z]
 
-    while need_visit:
-        node = need_visit.pop()
-        if node not in visited:
-            visited.append(node)
-            need_visit.extend(network[node])
 
-    return len(visited)
+def union(x, y, parent, size):
+    print(parent)
+    x = find(x, parent)
+    y = find(y, parent)
+
+    if x != y:
+        parent[y] = x
+        size[x] += size[y]
 
 
 def solution(links):
-    from collections import defaultdict
-    network = defaultdict(list)
+    parent = dict()
+    size = dict()
     for link in links:
-        network[link[0]].append(link[1])
-        network[link[1]].append(link[0])
-        print(DFS(network, link[0]))
+        x, y = link
+        if not parent.get(x):
+            parent[x] = x
+            size[x] = 1
+        if not parent.get(y):
+            parent[y] = y
+            size[y] = 1
+        union(x, y, parent, size)
 
-    return network
+        print(size[find(x, parent)])
 
 
 for _ in range(int(input())):
     links = []
     for x in range(int(input())):
-        links.append(tuple(input().split(" ")))
+        links.append(list(input().split(" ")))
     # print(links)
     network = solution(links)
     # print(network)
