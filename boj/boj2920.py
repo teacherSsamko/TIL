@@ -2,21 +2,20 @@ scores = list(map(int, input().split()))
 
 
 def solution(scores):
-    asc = 0
-    desc = 0
-    now = scores.pop(0)
-    for nxt in scores:
-        if nxt - now > 0:
-            asc += 1
+    asc = True
+    desc = True
+    for i in range(len(scores) - 1):
+        if scores[i + 1] - scores[i] > 0:
+            desc = False
         else:
-            desc += 1
-        now = nxt
-    if asc and desc:
-        return "mixed"
+            asc = False
+
     if asc:
         return "ascending"
-    else:
+    elif desc:
         return "descending"
+    else:
+        return "mixed"
 
 
 print(solution(scores))
