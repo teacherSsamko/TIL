@@ -1,18 +1,11 @@
-l = list()
-for _ in range(int(input())):
-    l.append(int(input()))
+import sys
 
 
-def qsort(data):
-    if len(data) <= 1:
-        return data
+l = [0] * 10001
+for _ in range(int(sys.stdin.readline())):
+    l[int(sys.stdin.readline())] += 1
 
-    pivot = data[0]
-    left = [item for item in data[1:] if item < pivot]
-    right = [item for item in data[1:] if item >= pivot]
-    return qsort(left) + [pivot] + qsort(right)
-
-
-result = qsort(l)
-for r in result:
-    print(r)
+for i in range(10001):
+    if l[i]:
+        for _ in range(l[i]):
+            print(i)
