@@ -4,3 +4,6 @@ venv/
 *.mod
 *.sum
 *.pyc
+*.DS_Store
+input.txt
+output.txt
