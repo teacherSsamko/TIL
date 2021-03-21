@@ -1,15 +1,3 @@
-def Z(N, x, y, r, c, answer=0):
-    dx = [0, 1, -1, 2]
-    dy = [0, 0, 1, 0]
-    for i in range(4):
-        x += dx[i]
-        y += dy[i]
-        if x == c and y == r:
-            return answer
-        answer += 1
-    return Z(N, x, y, r, c, answer)
-
-
 def solution(N, r, c):
     x, y = 0, 0
     n = 0
