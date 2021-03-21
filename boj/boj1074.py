@@ -1,25 +1,29 @@
-def solution(N, r, c):
-    x, y = 0, 0
-    n = 0
-    cache = [(0, 0)] * (2**(N+1))
-    dx = [0, 1, -1, 1]
-    dy = [0, 0, 1, 0]
-    # answer = Z(N, x, y, r, c, 0)
-    answer = 0
-    in_row = 2 ** (N-1)
-    # print(in_row)
-    for col in range(in_row):
-        for row in range(in_row):
-            x = 2 * row
-            y = 2 * col
-            for k in range(4):
-                x += dx[k]
-                y += dy[k]
-                if x == c and y == r:
-                    return answer
-                answer += 1
-    print((x, y))
+def solution(n, x, y):
+    global result
+    if n == 2:
+        if x == c and y == r:
+            print(result)
+            return
+        result += 1
+        if x + 1 == c and y == r:
+            print(result)
+            return
+        result += 1
+        if x == c and y + 1 == r:
+            print(result)
+            return
+        result += 1
+        if x + 1 == c and y + 1 == r:
+            print(result)
+            return
+        result += 1
+        return
+    solution(n / 2, x, y)
+    solution(n / 2, x + n // 2, y)
+    solution(n / 2, x, y + n//2)
+    solution(n / 2, x + n//2, y + n//2)
 
 
-N, r, c = list(map(int, input().split()))
-print(solution(N, r, c))
+result = 0
+N, r, c = map(int, input().split())
+solution(2 ** N, 0, 0)
