@@ -1,22 +1,27 @@
 import sys
-from itertools import combinations
 
 
 def solution(C, houses):
     answer = 0
     houses.sort()
-    tmp_l = [houses.pop(0), houses.pop()]
-    ps = combinations(houses, C-2)
-    min_dists = []
-    for p in ps:
-        p = tmp_l[:1] + list(p) + tmp_l[1:]
-        mind = p[-1]
-        for i in range(len(p) - 1):
-            if p[i + 1] - p[i] < mind:
-                mind = p[i + 1] - p[i]
-        min_dists.append(mind)
+    minGap = houses[1] - houses[0]
+    maxGap = houses[-1] - houses[0]
 
-    return max(min_dists)
+    while minGap <= maxGap:
+        midGap = (minGap + maxGap) // 2
+        c = 1
+        now_house = houses[0]
+        for i in range(1, len(houses)):
+            if houses[i] - now_house >= midGap:
+                now_house = houses[i]
+                c += 1
+        if c >= C:
+            minGap = midGap + 1
+            answer = midGap
+        else:
+            maxGap = midGap - 1
+
+    return answer
 
 
 N, C = map(int, input().split())
