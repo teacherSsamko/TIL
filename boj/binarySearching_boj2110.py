@@ -1,31 +1,27 @@
 import sys
+import bisect
+op_lst = list(map(int, sys.stdin.readline().split()))  # 집 개수, 공유기 개수 리스트
+coord_lst = sorted([int(sys.stdin.readline())
+                    for i in range(op_lst[0])])  # 좌표 리스트
 
+start = 1  # 최소 간격
+end = max(coord_lst) - min(coord_lst)  # 최대 간격
 
-def solution(C, houses):
-    answer = 0
-    houses.sort()
-    minGap = houses[1] - houses[0]
-    maxGap = houses[-1] - houses[0]
+while True:
+    median = (start+end)//2
+    # 단위 거리로 배치할 수 있는 공유기 수 구하기
+    starter = coord_lst[0]
+    starter_index = 0
+    router_count = 0
+    while starter_index < len(coord_lst):
+        router_count += 1
+        starter_index = bisect.bisect_left(
+            coord_lst, coord_lst[starter_index]+median)
 
-    while minGap <= maxGap:
-        midGap = (minGap + maxGap) // 2
-        c = 1
-        now_house = houses[0]
-        for i in range(1, len(houses)):
-            if houses[i] - now_house >= midGap:
-                now_house = houses[i]
-                c += 1
-        if c >= C:
-            minGap = midGap + 1
-            answer = midGap
-        else:
-            maxGap = midGap - 1
-
-    return answer
-
-
-N, C = map(int, input().split())
-houses = []
-for _ in range(N):
-    houses.append(int(sys.stdin.readline()))
-print(solution(C, houses))
+    if router_count < op_lst[1]:
+        end = median - 1
+    elif router_count >= op_lst[1]:
+        start = median + 1
+    if median == end:  # 더 이상 큰 단위 거리를 구할 수 없을 때
+        print(median)
+        break
