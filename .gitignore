@@ -1,10 +1,9 @@
-study_env/
-telegrambot_study.py
 venv/
 *.mod
 *.sum
 *.pyc
-*.DS_Store
 .DS_Store
 input.txt
 output.txt
+__pycache__
+.ipynb_checkpoints/
