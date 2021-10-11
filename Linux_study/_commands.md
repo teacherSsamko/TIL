@@ -27,3 +27,6 @@ edit files in place (makes backup if extension supplied).
 
 ## -i
 복사대상파일이 이미 그 위치에 존재한다면 덮어쓸 것인가를 사용자에게 확인 
+
+# modprobe
+LKM(적재 가능 커널 모듈)을 리눅스 커널에 추가하거나 제거하는데 사용한다. 
