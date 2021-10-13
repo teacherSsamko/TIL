@@ -30,3 +30,7 @@ edit files in place (makes backup if extension supplied).
 
 # modprobe
 LKM(적재 가능 커널 모듈)을 리눅스 커널에 추가하거나 제거하는데 사용한다. 
+
+# curl
+- `-s`, `--silent` 진행 내역이나 메세지 등을 출력하지 않음.
+- `-o`, `--output` 결과를 따로 저장하거나 `/dev/null`로 보내서 출력하지 않을 수 있음.
