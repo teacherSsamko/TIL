@@ -108,5 +108,9 @@ deployment에 속한 pod는 replicas에 의해 일정하게 유지됨.
 `kubectl uncordon {node-name}`  
 
 # drain
-유지보수를 위해 노드를 꺼야 하는 경우, 지정된 노드의 파드를 전부 다른 곳으로 이동시켜주는 기능
+유지보수를 위해 노드를 꺼야 하는 경우, 지정된 노드의 파드를 전부 다른 곳으로 이동시켜주는 기능  
+`kubectl drain {node-name}`  
+하지만 daemonset은 각 노드에 1개만 존재하는 파드여서 drain으로 삭제할 수 없습니다. 이 daemonset을 무시하려면, `--ignore-daemonsets` 옵션을 함께 사용해야 한다.  
+drain이 적용된 node는 cordon을 수행했을때와 같이 'SchedulingDisabled'상태가 된다.  
+보수가 끝났다면, `uncordon`으로 다시 스케쥴을 받을 수 있는 상태로 복귀시킨다.  
 
