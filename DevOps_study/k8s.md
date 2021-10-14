@@ -108,4 +108,5 @@ deployment에 속한 pod는 replicas에 의해 일정하게 유지됨.
 `kubectl uncordon {node-name}`  
 
 # drain
+유지보수를 위해 노드를 꺼야 하는 경우, 지정된 노드의 파드를 전부 다른 곳으로 이동시켜주는 기능
 
