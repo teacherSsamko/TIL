@@ -1,0 +1,3 @@
+- updates configurations in the current directory for readability and consistency. `terraform fmt`
+- `terraform validate`
+- `terraform show` to see tfstate
