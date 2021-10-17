@@ -7,3 +7,9 @@ input.txt
 output.txt
 __pycache__
 .ipynb_checkpoints/
+
+# terraform
+.terraform/
+.terraform.*
+*.backup
+
