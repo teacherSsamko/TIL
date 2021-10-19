@@ -78,7 +78,7 @@ metadata:
     일관성을 유지하기 위해서 변경될 가능성이 있는 경우에는 처음부터 apply로 생성하는 것이 권장됨.  
 
     `--record` 옵션을 사용하면, 배포한 정보의 히스토리를 기록함  
-    
+
 
 # pod에 명령 전달
 
@@ -116,4 +116,29 @@ deployment에 속한 pod는 replicas에 의해 일정하게 유지됨.
 하지만 daemonset은 각 노드에 1개만 존재하는 파드여서 drain으로 삭제할 수 없습니다. 이 daemonset을 무시하려면, `--ignore-daemonsets` 옵션을 함께 사용해야 한다.  
 drain이 적용된 node는 cordon을 수행했을때와 같이 'SchedulingDisabled'상태가 된다.  
 보수가 끝났다면, `uncordon`으로 다시 스케쥴을 받을 수 있는 상태로 복귀시킨다.  
+
+# rollout history
+`--record` 옵션으로 기록된 히스토리를 확인 가능.  
+`kubectl rollout historydeployment {pod name}`  
+
+# set image
+container의 버전을 변경할 수 있다.
+`kubectl set image deployment {pod name} {image}={image}:{version}`  
+예) `kubectl set image deployment ssam-nginx nginx=nginx:1.16.0`  
+이렇게 하면 기존 pod들을 하나씩 지우고 변경된 이미지를 가진 파드를 새로 생성하는 방식으로 버전을 변경한다.  
+
+# rollout status
+현재 진행중인 상태 확인  
+`kubectl rollout status deployment {pod name}`  
+
+# describe
+쿠버네티스 상태를 자세히 살펴볼 때 사용  
+`kubectl describe deployment {pod name}`  
+
+# rollout undo
+rollout revision을 한단계 뒤로 되돌린다
+`kubectl rollout undo deployemnt {pod name}`  
+  
+- `--to-revision` 특정 시점으로 돌아가고 싶을때 사용하는 옵션  
+
 
