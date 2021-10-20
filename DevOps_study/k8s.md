@@ -21,6 +21,9 @@
 쿠보너테스 클러스터에서 도메인 이름을 이용해 통신할 때 사용.  
 [공식홈페이지](https://coredns.io)
 
+## Service
+외부에서 쿠버네티스 클러스터에 접속하는 방법
+
 # kubectl
 `kubectl get nodes`  
 node 연결상태 확인  
@@ -140,5 +143,18 @@ rollout revision을 한단계 뒤로 되돌린다
 `kubectl rollout undo deployemnt {pod name}`  
   
 - `--to-revision` 특정 시점으로 돌아가고 싶을때 사용하는 옵션  
+
+# serviece
+`kubectl get services`  
+사용중인 서비스 보기
+
+# NodePort
+NodePort를 이용해서 Service를 생성하면 외부에서 접속이 가능하다.  
+이때, scale을 이용해 pod를 늘려주면 자동으로 load balancer의 역할도 수행한다.  
+  
+## expose
+Object Spec 파일이 아닌 커맨드로 NodePort를 사용하고자 할 때 사용하는 커맨드.  
+`kubectl expose deployment {pod name} --type=NodePort --name={service name} --port={port}`  
+이렇게 커맨드로 NodePort를 사용할 경우에는 외부해서 접속할 Port는 선택할 수 없다. 30000~32767사이의 포트번호가 임의로 배정된다.  
 
 
