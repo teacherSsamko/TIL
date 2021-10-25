@@ -3,8 +3,9 @@
 ## To run terraform with docker
 
 1. `terraform init`
-2. `terraform apply` and type `yes` for approving to perform the action
-3. `terraform destroy` stop the container
+2. `terraform plan` show the plan what will apply to the instance
+3. `terraform apply` and type `yes` for approving to perform the action
+4. `terraform destroy` stop the container
 
 ## with AWS
 
