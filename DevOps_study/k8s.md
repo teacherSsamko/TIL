@@ -160,3 +160,7 @@ Object Spec 파일이 아닌 커맨드로 NodePort를 사용하고자 할 때 �
 
 # Ingress
 여러 개의 deployment가 있을 때 고유한 주소를 제공해 사용 목적에 따른 다른 응답을 제공하고, 트래픽에 대한 L4/L7 로드밸런서와 보안 인증서를 처리하는 기능을 제공함
+
+# HPA (Horizantal Pod Autoscaler)
+부하량에 따라 deployment pods 수를 유동적으로 관리하는 기능
+
