@@ -17,3 +17,6 @@
 
 [] make custom AMI
 [] make custom VPC
+
+## Vscode.dev
+hi it's really cool
