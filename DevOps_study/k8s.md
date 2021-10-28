@@ -148,6 +148,10 @@ rollout revision을 한단계 뒤로 되돌린다
 `kubectl get services`  
 사용중인 서비스 보기
 
+# edit
+`kubectl edit deployment {pod name}`  
+pods 파일 수정하기
+
 # NodePort
 NodePort를 이용해서 Service를 생성하면 외부에서 접속이 가능하다.  
 이때, scale을 이용해 pod를 늘려주면 자동으로 load balancer의 역할도 수행한다.  
@@ -164,3 +168,12 @@ Object Spec 파일이 아닌 커맨드로 NodePort를 사용하고자 할 때 �
 # HPA (Horizantal Pod Autoscaler)
 부하량에 따라 deployment pods 수를 유동적으로 관리하는 기능
 
+## autoscale
+`kubectl autoscale deployment {pod name} --min={min pods number} --max={max pods number} --cpu-percent={cpu usage percent}`  
+- min: 최소 파드 수
+- max: 최대 파드 수
+- cpu-percent: cpu 사용량이 -%를 넘으면 autoscale하겠다
+
+## get hpa
+`kubectl get hpa`  
+hpa의 현재 상태를 확인할 수 있음
