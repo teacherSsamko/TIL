@@ -32,6 +32,10 @@ node 연결상태 확인
 `kubectl get pods -o=custom-columns=NAME:.metadata.name,IP:.status.podIP,STATUS:.status.phase,NODE:.spec.nodeName`  
 custom column 사용
 
+## watch
+`watch kubectl ~`  
+실시간으로 상태변화를 확인하는 방법
+
 ## pod data 확인하는 방법
 `kubectl get pod {pod-name} -o yaml > pod.yaml`  
 pod의 세부 정보를 yaml형식으로 출력해서, pod.yaml에 저장한다.  
