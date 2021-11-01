@@ -214,3 +214,58 @@ hpa의 현재 상태를 확인할 수 있음
 
 Deployment의 replicas가 node 수 만큼 정해져 있는 형태. node하나당 하나의 pod 생성.  
 node를 관리하는 pod라면 daemonSet으로 만드는 것이 효율적
+
+## PV / PVC
+
+Persistent Volume / Persistent Volume Claim  
+`mkdir /nfs_shared`  
+`echo '/nfs_shared 192.168.1.0/24(rw,sync,no_root_squash)'j >> /etc/exports`  
+/nfs_shared => 공유되는 디렉토리  
+192.168.1.0/24 => NFS로 받아들일 IP영역  
+(~) => 옵션
+
+- rw: 읽기 쓰기
+- sync: 쓰기 작업 동기화
+- no_root_squash: root 계정 사용  
+
+`>> /etc/exports` => /etc/exports에 기록  
+`systemctl enable --now nfs` NFS서버 활성화
+
+> nfs-pv.yaml
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv
+spec:
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: 192.168.1.10
+    path: /nfs_shared
+```
+
+> nfs-pvc.yaml
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Mi
+```
+
+`kubectl get pvc`  
+pvc 확인  
+
+
+
