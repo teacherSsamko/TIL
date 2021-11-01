@@ -267,5 +267,10 @@ spec:
 `kubectl get pvc`  
 pvc 확인  
 
+> audit-trail  
+> 요청을 처리할 때마다 접속 정보를 로그로 기록하는 컨테이너
 
+## statefulSet
 
+pod가 만들어지는 이름과 순서를 예측할 때 사용.  
+redis, mongoDB 등의 master-slave 구조 시스템에서 필요로 함.
