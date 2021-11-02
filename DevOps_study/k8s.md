@@ -273,4 +273,8 @@ pvc 확인
 ## statefulSet
 
 pod가 만들어지는 이름과 순서를 예측할 때 사용.  
-redis, mongoDB 등의 master-slave 구조 시스템에서 필요로 함.
+redis, mongoDB 등의 master-slave 구조 시스템에서 필요로 함.  
+
+> expose명령어는 statefulSet을 지원하지 않음. 파일로 노출시켜야 함.
+
+stetefulSet은 headless로 사용가능함. 따라서 ip를 배정하지 않고, pod name으로 k8s가 직접 접근 및 제어가 가능함.
