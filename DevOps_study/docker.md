@@ -9,3 +9,37 @@ k8s의 pod가 container로 이루어져있고, 이 container를 만들고 관리
 - 개별적 실행 환경
   - CPU, Network, Memory와 같은 시스템 자원을 독자적으로 사용하도록 할당된 환경
 
+## Commands
+
+`docker search nginx`  
+nginx image 검색  
+
+`docker pull nginx`  
+nginx image 내려받기  
+
+`docker images nginx`  
+nginx 관련 이미지 확인  
+
+`docker run`  
+docker 컨테이너 생성  
+
+### run options
+
+- `-d`, `--detach`: background에서 컨테이너 구동
+- `--restart always`: 해당 컨테이너가 항상 구동되도록
+
+`docker ps`  
+process status. 현재 구동중인 컨테이너 목록  
+
+### ps options
+
+- `-f {key}`: 검색결과 필터링
+  - id, label, name
+  - exited: 컨테이너가 종료됐을 때 반환하는 숫자 코드
+  - status: 컨테이너의 작동 상태
+  - ancestor: 컨테이너가 사용하는 이미지
+
+`docker stop {container id}`  
+해당 컨테이너 중지  
+`docker rm {container id}`  
+해당 컨테이너 삭제  
