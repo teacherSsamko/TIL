@@ -27,6 +27,9 @@ docker 컨테이너 생성
 
 - `-d`, `--detach`: background에서 컨테이너 구동
 - `--restart always`: 해당 컨테이너가 항상 구동되도록
+- `-p`, `--publish`: 외부에서 호스트로 보낸 요청을 컨테이너 내부로 전달하는 옵션.
+  - `-p <요청 받을 호스트 포트>:<연결할 컨테이너 포트>`
+- `--name`: container의 이름 설정
 
 `docker ps`  
 process status. 현재 구동중인 컨테이너 목록  
@@ -43,3 +46,6 @@ process status. 현재 구동중인 컨테이너 목록
 해당 컨테이너 중지  
 `docker rm {container id}`  
 해당 컨테이너 삭제  
+
+> container는 변경 불가능한 인프라(immutable infrastructure). 따라서, 실행 이후에는 directory 연결이나 port 노출같은 설정을 변경할 수 없음.  
+
