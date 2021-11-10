@@ -27,4 +27,8 @@ AllUsers, Developers, Testers, Managers, SysAdmins
 
 ## Reference
 
-[IAM에 대한 기업 사용 사례](https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/IAM_UseCases.html)
+[IAM에 대한 기업 사용 사례](https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/IAM_UseCases.html)  
+
+[What is ABAC for AWS?](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_attribute-based-access-control.html)
+
+[AWS IAM: IAM Policy 알아보기 (이론편)](https://webcache.googleusercontent.com/search?q=cache:epQKk7onDpgJ:https://musma.github.io/2019/11/05/about-aws-iam-policy.html+&cd=2&hl=ko&ct=clnk&gl=kr)  
