@@ -1,27 +1,33 @@
-resource "aws_iam_user" "backend_dev" {
-  count = length(var.username)
-  name  = element(var.username, count.index)
-  path  = "/dev/"
+resource "aws_iam_user" "dev" {
+  for_each = toset(var.dev_team)
+  name     = each.key
+  path     = "/dev/"
 }
 
 resource "aws_iam_access_key" "newemp" {
-  count = length(var.username)
-  user  = element(var.username, count.index)
+  for_each = toset(var.dev_team)
+  user     = each.key
 
   depends_on = [
-    aws_iam_user.backend_dev
+    aws_iam_user.dev
   ]
 }
 
 resource "aws_iam_user_group_membership" "developer" {
-  count = length(var.username)
-  user  = element(var.username, count.index)
+  for_each = toset(var.dev_team)
+  user     = each.key
 
   groups = [
-    "developer",
+    "Dev",
   ]
 
   depends_on = [
-    aws_iam_user.backend_dev
+    aws_iam_user.dev
   ]
+}
+
+resource "aws_iam_user_login_profile" "developer" {
+  for_each = toset(var.dev_team)
+  user     = each.key
+  pgp_key  = "keybase:ssamko"
 }
