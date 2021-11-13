@@ -18,7 +18,7 @@ resource "aws_iam_user_policy" "ec2_instance_connect" {
 }
 
 resource "aws_iam_user_group_membership" "developer" {
-  for_each = toset(var.dev_team)
+  for_each = aws_iam_user.dev
   user     = each.key
 
   groups = [
