@@ -8,18 +8,8 @@ resource "aws_iam_account_password_policy" "strict" {
 }
 
 
-data "aws_iam_policy_document" "ec2_instance_connect" {
+data "aws_iam_policy_document" "ec2_describe" {
 
-  statement {
-    effect    = "Allow"
-    actions   = ["ec2-instance-connect:*"]
-    resources = ["arn:aws:ec2:us-west-2::instance/*"]
-    condition {
-      test     = "StringEquals"
-      values   = ["eunsub"]
-      variable = "ec2:osuser"
-    }
-  }
   statement {
     effect    = "Allow"
     actions   = ["ec2:DescribeInstances"]
@@ -28,9 +18,23 @@ data "aws_iam_policy_document" "ec2_instance_connect" {
 
 }
 
+data "aws_iam_policy_document" "ec2_instance_connect" {
+  for_each = toset(var.dev_team)
+
+  statement {
+    effect    = "Allow"
+    actions   = ["ec2-instance-connect:*"]
+    resources = ["arn:aws:ec2:us-west-2::instance/*"]
+    condition {
+      test     = "StringEquals"
+      values   = ["${each.value}"]
+      variable = "ec2:osuser"
+    }
+  }
+}
 
 data "aws_iam_policy_document" "dev_policy" {
   source_policy_documents = [
-    data.aws_iam_policy_document.ec2_instance_connect.json,
+    data.aws_iam_policy_document.ec2_describe.json,
   ]
 }
