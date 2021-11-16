@@ -15,5 +15,22 @@
 
 ## TODO
 
-[] make custom AMI
+[] make custom AMI -> Packer
 [] make custom VPC
+
+## Provisioning & Configuration Tools combinations
+
+### Terraform & Ansible
+
+Pros: masterless structure  
+Cons: Ansible is precedural code. with mutable servers. maintenance will become difficult when infra gets bigger.
+
+### Packer & Terraform
+
+Pros: immutable infarastructure  
+Cons: VMs can take a long time to build and deploy.
+
+### Terraform & kubernetes
+
+Pros: quick build. lots of benefits of k8s
+Cons: complexity. k8s is difficult & expensive
