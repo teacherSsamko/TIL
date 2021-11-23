@@ -14,19 +14,19 @@
   - request to AWSadmin
 - AWS CLI
 
-    [AWS CLI 버전 2 설치, 업데이트 및 제거](https://docs.aws.amazon.com/ko_kr/cli/latest/userguide/install-cliv2.html)
+  [AWS CLI 버전 2 설치, 업데이트 및 제거](https://docs.aws.amazon.com/ko_kr/cli/latest/userguide/install-cliv2.html)
 
 - python3.x
 
-    [Download Python](https://www.python.org/downloads/)
+  [Download Python](https://www.python.org/downloads/)
 
 - AWS ec2 instance connect CLI
 
-    `pip3 install ec2instanceconnectcli`
+  `pip3 install ec2instanceconnectcli`
 
 - **Instance_id** that you want to connect to
 
-    Check AWS web console or Ask to peer
+  Check AWS web console or Ask to peer
 
 ## The way to connect to instance
 
@@ -37,7 +37,9 @@
 ### Amazon EC2 Instance Connect CLI
 
 - Set Up
+
   - AWS Configure
+
     - option 1) Configure using AWS CLI
 
       [구성 기본 사항](https://docs.aws.amazon.com/ko_kr/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config)
@@ -64,8 +66,14 @@
 
 ## How to transfer files
 
+### rsync
+
 - `rsync -a -e mssh {source file} {AWS IAM name}@{instance_id}:{target path}`
 - ex) `rsync -a -e mssh ./sample.txt ssamko@i-0dc37336dbexample:/home/ssamko/`
+
+### msftp
+
+- `msftp {AWS IAM name}@{instance_id}`
 
 ## How to set in ssh config
 

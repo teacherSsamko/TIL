@@ -1,11 +1,12 @@
 # IaC - Terraform
 
-## To run terraform with docker
+## To run terraform
 
 1. `terraform init`
 2. `terraform plan` show the plan what will apply to the instance
 3. `terraform apply` and type `yes` for approving to perform the action
 4. `terraform destroy` stop the container
+5. `terraform graph` show the dependency graph(order of running)
 
 ## with AWS
 
