@@ -1,0 +1,20 @@
+{
+    "_comment": "npm & nginx base AMI using ubuntu 20.04 LTS",
+    "builders": [{
+        "type": "amazon-ebs",
+        "region": "us-west-2",
+        "source_ami": "ami-036d46416a34a611c",
+        "instance_type": "t2.micro",
+        "ssh_username": "ubuntu",
+        "ami_name": "ec2_npm_nginx_packer_{{timestamp}}",
+        "profile": "ssamko"
+    }],
+    "provisioners": [{
+        "type": "shell",
+        "inline": [
+            "sudo apt-get update",
+            "sudo apt-get install -y nginx",
+            "sudo service nginx start"
+        ]
+    }]
+}
