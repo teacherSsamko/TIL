@@ -1,0 +1,21 @@
+{
+    "_comment": "Frontend(react.js) base AMI using ubuntu 20.04 LTS",
+    "builders": [{
+        "type": "amazon-ebs",
+        "region": "us-west-2",
+        "source_ami": "ami-036d46416a34a611c",
+        "instance_type": "t3.medium",
+        "ssh_username": "ubuntu",
+        "ami_name": "ec2_FE_packer_{{timestamp}}",
+        "profile": "ssamko",
+        "tags": {
+            "for": "react-frontend"
+        }
+    }],
+    "provisioners": [
+        {
+            "type": "ansible",
+            "playbook_file": "../playbook/FE.yml"
+        }
+    ]
+}
