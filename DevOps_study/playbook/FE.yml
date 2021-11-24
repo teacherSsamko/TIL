@@ -1,0 +1,8 @@
+- name: Build Ubuntu 20.04 LTS Base Image (React.js)
+  hosts: "*"
+  vars:
+    git_token: "{{lookup('env', 'TF_VAR_git_access_token')}}"
+  roles:
+    - common
+    - nginx
+    - webserver

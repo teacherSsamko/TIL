@@ -1,0 +1,15 @@
+- name: Clone the Frontend(react) repository
+  ansible.builtin.git:
+    repo: https://{{ git_token }}@github.com/teacherSsamko/ssamko_frontend.git
+    dest: /home/ubuntu/ssamko_frontend
+
+- name: copy .env file
+  ansible.builtin.copy:
+    src: ../files/.env
+    dest: /home/ubuntu/ssamko_frontend/.env
+
+- name: npm install
+  shell: cd /home/ubuntu/ssamko_frontend && npm install
+
+- name: npm run build
+  shell: cd /home/ubuntu/ssamko_frontend && npm run build

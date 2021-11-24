@@ -1,0 +1,15 @@
+server {
+    listen 8080;
+    server_name ssamko.com;
+
+    root /home/ubuntu/ssamko_frontend/build;
+    index index.html;
+
+    location / {
+            try_files $uri $uri/ @rewrites;
+    }
+
+    location @rewrites {
+            rewrite ^(.+)$ /index.html last;
+    }
+}

@@ -1,0 +1,18 @@
+- name: update apt
+  become: true
+  become_user: root
+  apt:
+    update_cache: true
+    cache_valid_time: 86400
+
+- name: install nginx, nodejs, npm, and git
+  become: true
+  become_user: root
+  apt:
+    pkg:
+      - nginx
+      - nodejs
+      - npm
+      - git
+    update_cache: true
+    cache_valid_time: 86400

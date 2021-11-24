@@ -1,0 +1,24 @@
+- name: Apply Nginx template
+  become: true
+  become_user: root
+  template:
+    src: ../templates/nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+  notify: Restart Nginx
+
+- name: Enable site
+  become: true
+  become_user: root
+  file:
+    src: /etc/nginx/sites-available/default
+    dest: /etc/nginx/sites-enabled/default
+    state: link
+  notify: Restart Nginx
+
+- name: Allow all access to tcp port 8080
+  become: true
+  become_user: root
+  ufw:
+    rule: allow
+    port: "8080"
+    proto: tcp
