@@ -14,6 +14,10 @@
 2. `terraform validate`
 3. `terraform show` see tfstate
 
+## force-unlock
+
+When you stuck with state lock for some reasons. you can force to unlock by `terraform force-unlock [options] LOCK_ID [DIR]`.
+
 ## TODO
 
 [] make custom AMI -> Packer
