@@ -1,7 +1,8 @@
 pragma solidity ^0.5.0;
 
 /**
- * Full copy of KIP17 for taking lecture
+ * Full copy of KIP17 for taking lecture.
+ * original repository: https://github.com/klaytn/klaytn-contracts
  */
 
 /**
