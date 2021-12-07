@@ -1,24 +1,36 @@
 // Klaytn IDE uses solidity 0.4.24, 0.5.6 versions.
 pragma solidity >=0.4.24 <=0.5.6;
 
+contract IKIP17Receiver {
+    function onKIP17Received(
+        address operator,
+        address from,
+        uint256 tokenId,
+        bytes memory data
+    ) public returns (bytes4);
+}
+
 contract NFTSimple {
-    string public name = "KlaySsamko";
+    string public name = "KlaySSAMKO";
     string public symbol = "KL";
 
     mapping(uint256 => address) public tokenOwner;
     mapping(uint256 => string) public tokenURIs;
 
-    // tokenOwner list
+    // 소유한 토큰 리스트
     mapping(address => uint256[]) private _ownedTokens;
-    // onKIP17Recieved bytes value
     bytes4 private constant _KIP17_RECEIVED = 0x6745782b;
+
+    // mint(tokenId, uri, owner)
+    // transferFrom(from, to, tokenId) -> owner가 바뀌는 것(from -> to)
 
     function mintWithTokenURI(
         address to,
         uint256 tokenId,
         string memory tokenURI
     ) public returns (bool) {
-        // mint a token with tokenId to 'to'
+        // to에게 tokenId(일련번호)를 발행하겠다.
+        // 적힐 글자는 tokenURI
         tokenOwner[tokenId] = to;
         tokenURIs[tokenId] = tokenURI;
 
@@ -28,25 +40,52 @@ contract NFTSimple {
         return true;
     }
 
-    function safeTransferfrom(
+    function safeTransferFrom(
         address from,
         address to,
         uint256 tokenId,
         bytes memory _data
     ) public {
         require(from == msg.sender, "from != msg.sender");
-        require(from == tokenOwner[tokenId], "you are not owner of the token");
-
+        require(
+            from == tokenOwner[tokenId],
+            "you are not the owner of the token"
+        );
+        //
         _removeTokenFromList(from, tokenId);
         _ownedTokens[to].push(tokenId);
-
+        //
         tokenOwner[tokenId] = to;
-
-        // If Receiver has some code to implements when recieved, execute codes
+        //
         require(
             _checkOnKIP17Received(from, to, tokenId, _data),
             "KIP17: transfer to non KIP17Receiver implementer"
         );
+    }
+
+    function _removeTokenFromList(address from, uint256 tokenId) private {
+        // [10, 15, 19, 20] -> 19번을 삭제 하고 싶어요
+        // [20, 15, 20, 19]
+        // [10, 15, 20]
+        uint256 lastTokenIdex = _ownedTokens[from].length - 1;
+        for (uint256 i = 0; i < _ownedTokens[from].length; i++) {
+            if (tokenId == _ownedTokens[from][i]) {
+                // Swap last token with deleting token;
+                _ownedTokens[from][i] = _ownedTokens[from][lastTokenIdex];
+                _ownedTokens[from][lastTokenIdex] = tokenId;
+                break;
+            }
+        }
+        //
+        _ownedTokens[from].length--;
+    }
+
+    function ownedTokens(address owner) public view returns (uint256[] memory) {
+        return _ownedTokens[owner];
+    }
+
+    function setTokenUri(uint256 id, string memory uri) public {
+        tokenURIs[id] = uri;
     }
 
     function _checkOnKIP17Received(
@@ -82,54 +121,34 @@ contract NFTSimple {
     }
 
     function isContract(address account) internal view returns (bool) {
+        // This method relies in extcodesize, which returns 0 for contracts in
+        // construction, since the code is only stored at the end of the
+        // constructor execution.
+
         uint256 size;
+        // solhint-disable-next-line no-inline-assembly
         assembly {
             size := extcodesize(account)
         }
         return size > 0;
-    }
-
-    function _removeTokenFromList(address from, uint256 tokenId) private {
-        // [10, 15, 19, 20] -> want to remove 19
-        // [10, 15, 20, 19] -> slice
-        // [10, 15, 20]
-        uint256 lastIdx = _ownedTokens[from].length - 1;
-        for (uint256 i = 0; i < _ownedTokens[from].length; i++) {
-            if (tokenId == _ownedTokens[from][i]) {
-                _ownedTokens[from][i] = _ownedTokens[from][lastIdx];
-                _ownedTokens[from][lastIdx] = tokenId;
-                break;
-            }
-        }
-        _ownedTokens[from].length--;
-    }
-
-    function ownedTokens(address owner) public view returns (uint256[] memory) {
-        return _ownedTokens[owner];
-    }
-
-    function setTokenUri(uint256 id, string memory uri) public {
-        tokenURIs[id] = uri;
     }
 }
 
 contract NFTMarket {
     mapping(uint256 => address) public seller;
 
-    function buyNFT(uint256 tokenId, address NFTAddress)
+    function buyNFT(uint256 tokenId, address NFT)
         public
         payable
         returns (bool)
     {
-        // send 0.01 klay to buyer
         address payable receiver = address(uint160(seller[tokenId]));
 
-        // send 0.01 klay to receiver
-        // 10 ** 18 peb = 1 klay
-        // 10 ** 16 peb = 0.01 klay
+        // Send 0.01 klay to Seller
         receiver.transfer(10**16);
 
-        NFTSimple(NFTAddress).safeTransferfrom(
+        // Send NFT if properly send klay
+        NFTSimple(NFT).safeTransferFrom(
             address(this),
             msg.sender,
             tokenId,
@@ -139,14 +158,17 @@ contract NFTMarket {
         return true;
     }
 
-    // when Market is received token(NFT is on sale), store who want to sell it
+    // Called when SafeTransferFrom called from NFT Contract
     function onKIP17Received(
         address operator,
         address from,
         uint256 tokenId,
         bytes memory data
     ) public returns (bytes4) {
+        // Set token seller, who was a token owner
         seller[tokenId] = from;
+
+        // return signature which means this contract implemented interface for ERC721
         return
             bytes4(keccak256("onKIP17Received(address,address,uint256,bytes)"));
     }
