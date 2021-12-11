@@ -1,7 +1,5 @@
-n = int(input())
-
-for i in range(n):
-    s = "*"
-    a = " "
-    print(a * (n - i - 1), end="")
-    print(s * (i + 1))
+while True:
+    a, b = map(int, input().split())
+    if a == 0 and b == 0:
+        break
+    print(a + b)
