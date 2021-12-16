@@ -46,7 +46,10 @@ LKM(적재 가능 커널 모듈)을 리눅스 커널에 추가하거나 제거�
 
 ## ulimit
 
-| 한번에 처리 가능한 파일의 수를 조절하는 명령어.
-| 이 명령어를 사용하면 프로세스의 실행 시간을 제한할 수 있다.
+여러 가지 limit을 설정할 수 있는 커맨드
 
-`ulimit -n {number of files}`
+- `ulimit -n {number of files}`
+  한번에 처리 가능한 파일의 수를 조절하는 명령어  
+   일시적인 조정. hard limit보다 클 수 없다.
+
+- `/etc/security/limits.conf`에서 수정해야 영구적인 반영이 됨.
