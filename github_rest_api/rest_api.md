@@ -11,3 +11,7 @@
 - use authentication
 
 `curl -i -H "Authoriziation: token {git access token}" https://api.github.com/user`
+
+- get latest release
+
+`curl -i https://api.github.com/repos/teacherSsamko/TIL/releases/latest`
