@@ -16,6 +16,8 @@
   `sudo usermod -u [UID] [username]`
 - change GID
   `sudo usermod -g [GID] [username]`
+- change home directory
+  `sudo usermod -d [path] [username]`
 - remove user
   `sudo deluser --remove-home [username]`
 - remove user from sudo group
