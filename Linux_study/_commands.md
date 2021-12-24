@@ -53,3 +53,14 @@ LKM(적재 가능 커널 모듈)을 리눅스 커널에 추가하거나 제거�
    일시적인 조정. hard limit보다 클 수 없다.
 
 - `/etc/security/limits.conf`에서 수정해야 영구적인 반영이 됨.
+
+## stdout, stderr handling
+
+- `command > file` or `command 1> file`
+  - 1 for stdout
+- `command 2> file`
+  - 2 for stderr
+- `command 2> error.txt 1> output.txt`
+- `command 2> /dev/null`
+- `command > file 2>&1`
+  - the order of redirection is important. `command 2>&1 > file` doesn't work. because 'stderr'is redirected to 'stdout' before the 'stdout' is redirected to 'file'.
