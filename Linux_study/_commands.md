@@ -64,3 +64,7 @@ LKM(적재 가능 커널 모듈)을 리눅스 커널에 추가하거나 제거�
 - `command 2> /dev/null`
 - `command > file 2>&1`
   - the order of redirection is important. `command 2>&1 > file` doesn't work. because 'stderr'is redirected to 'stdout' before the 'stdout' is redirected to 'file'.
+
+## check running shell
+
+`echo $0`
