@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SOME_LAMBDA_FUNCTION
+
+  Handling messages from SQS queue
+
+Globals:
+  Function:
+    Timeout: 3
+    Runtime: python3.8
+    ReservedConcurrentExecutions: 10
+    Tracing: Active
+
+Resources:
+  SampleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda-app/ # The function code's Amazon S3 URI, path to local folder
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.8
+      DeadLetterQueue:
+        Type: SQS
+        QueueName: sample_queue_deadletter
+        TargetArn: arn:aws:sqs:us-west-2:123456789:sample_queue_deadletter
+      Events:
+        Message:
+          Type: SQS
+          Properties:
+            Queue: arn:aws:sqs:us-west-2:123456789:sample_queue
+
+Outputs:
+  NotiFunction:
+    Description: "Sample Lambda Function ARN"
+    Value: !GetAtt SampleFunction.Arn
