@@ -4,6 +4,8 @@
 
 - `df`: Shows the amount of disk space used and available on Linux file systems.
 - `du`: Display the amount of disk space used by the specified files and for each subdirectory.
+  - `-s <file/directory>`: Show the size in bytes.
+  - `-d <number>`: Display \<number\> depth of directories.
 - `fdisk`: Displays the partition table of a disk.
   - `-l`
 - `lsblk`: Displays the block devices and their size.
