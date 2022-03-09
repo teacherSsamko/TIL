@@ -6,15 +6,13 @@ test5 = "{[]"  # 0
 
 pairs = {"{": "}", "[": "]", "(": ")"}
 
-closers = ["}", "]", ")"]
 
-
-def find_match(txt):
+def is_valid(txt):
     closers_to_match = []
     for c in txt:
         if c in pairs:
             closers_to_match.append(pairs[c])
-        elif c in closers:
+        elif c in pairs.values():
             if c == closers_to_match.pop():
                 continue
             else:
@@ -23,8 +21,8 @@ def find_match(txt):
     return 1 if not closers_to_match else 0
 
 
-print(find_match(test1))
-print(find_match(test2))
-print(find_match(test3))
-print(find_match(test4))
-print(find_match(test5))
+print(is_valid(test1))
+print(is_valid(test2))
+print(is_valid(test3))
+print(is_valid(test4))
+print(is_valid(test5))
