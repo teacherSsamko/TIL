@@ -5,10 +5,33 @@ from typing import List
 
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        cur_sum = max_sum = nums[0]
+        def findBestSubarray(nums, left, right):
+            # Base case - empty array
+            if left > right:
+                return -math.inf
 
-        for num in nums[1:]:
-            cur_sum = max(num, cur_sum + num)
-            max_sum = max(cur_sum, max_sum)
+            mid = (left + right) // 2
+            curr = best_left_sum = best_right_sum = 0
 
-        return max_sum
+            # Iterate from the middle to the beginning
+            for i in range(mid - 1, left - 1, -1):
+                curr += nums[i]
+                best_left_sum = max(best_left_sum, curr)
+
+            # reset curr and iterate from the middle to the end
+            curr = 0
+            for i in range(mid + 1, right + 1):
+                curr += nums[i]
+                best_right_sum = max(best_right_sum, curr)
+
+            # The best_combined_sum uses the middle element and
+            # the best possible sum from each half
+            best_combined_sum = nums[mid] + best_left_sum + best_right_sum
+
+            # find the best subarray possible from both halves.
+            left_half = findBestSubarray(nums, left, mid - 1)
+            right_half = findBestSubarray(nums, mid + 1, right)
+
+            return max(best_combined_sum, left_half, right_half)
+
+        return findBestSubarray(nums, 0, len(nums) - 1)
