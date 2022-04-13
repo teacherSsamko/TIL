@@ -6,6 +6,8 @@ Minikube is a tool for running Kubernetes in a VM. It is a single-node Kubernete
 
 ## How to pull ECR Image in minikube
 
+[reference](https://github.com/upmc-enterprises/registry-creds/issues/65#issuecomment-424820692)
+
 To pull ECR Image in minikube, you need:
 
 - addons:
