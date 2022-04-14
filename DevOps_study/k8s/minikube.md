@@ -10,6 +10,8 @@ Minikube is a tool for running Kubernetes in a VM. It is a single-node Kubernete
 
 To pull ECR Image in minikube, you need:
 
+- `minikube addons configure registry-creds`
+- `minikube addons enable registry-creds`
 - addons:
   - registry-creds:
     - server: \<your-ecr-server>
