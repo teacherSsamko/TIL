@@ -7,6 +7,8 @@
 
 ## on Mac
 
+[Setup postgresql](https://www.sqlshack.com/setting-up-a-postgresql-database-on-mac/)
+
 - execute postgresql
   - `psql <user>` ex) `psql postgres`
 - if you don't have user postgres(default user)
@@ -71,3 +73,19 @@ query without return
 
 set config with parameter.
 if `is_local` is true, use this config only for this transactions.
+
+### SECURITY DEFINER STABLE
+
+refer to [docs](https://www.postgresql.org/docs/current/sql-createfunction.html)
+
+>[EXTERNAL] SECURITY INVOKER
+>[EXTERNAL] SECURITY DEFINER
+>SECURITY INVOKER indicates that the function is to be executed with the privileges of the user that calls it. That is the default. SECURITY DEFINER specifies that the function is to be executed with the privileges of the user that owns it.
+>
+>The key word EXTERNAL is allowed for SQL conformance, but it is optional since, unlike in SQL, this feature applies to all functions not only external ones.
+
+>IMMUTABLE indicates that the function cannot modify the database and always returns the same result when given the same argument values; that is, it does not do database lookups or otherwise use information not directly present in its argument list. If this option is given, any call of the function with all-constant arguments can be immediately replaced with the function value.
+
+>STABLE indicates that the function cannot modify the database, and that within a single table scan it will consistently return the same result for the same argument values, but that its result could change across SQL statements. This is the appropriate selection for functions whose results depend on database lookups, parameter variables (such as the current time zone), etc. (It is inappropriate for AFTER triggers that wish to query rows modified by the current command.) Also note that the current_timestamp family of functions qualify as stable, since their values do not change within a transaction.
+
+>VOLATILE indicates that the function value can change even within a single table scan, so no optimizations can be made. Relatively few database functions are volatile in this sense; some examples are random(), currval(), timeofday(). But note that any function that has side-effects must be classified volatile, even if its result is quite predictable, to prevent calls from being optimized away; an example is setval().
