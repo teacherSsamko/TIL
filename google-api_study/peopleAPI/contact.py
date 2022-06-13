@@ -2,14 +2,16 @@ from __future__ import print_function
 
 import os.path
 
+import requests
+
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/contacts.readonly']
+# SCOPES = ['https://www.googleapis.com/auth/contacts.readonly', ]
+SCOPES = ["https://www.googleapis.com/auth/directory.readonly"]
 
 
 def main():
@@ -32,26 +34,25 @@ def main():
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
         with open('token.json', 'w') as token:
+            print("new token:\n", creds.token)
             token.write(creds.to_json())
 
-    try:
-        service = build('people', 'v1', credentials=creds)
+    access_token = creds.token
+    header = {
+        "Authorization": f"Bearer {access_token}"
+    }
+    params = {
+        "readMask":"names",
+        "sources":"DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE"
+    }
+    url = f"https://people.googleapis.com/v1/people:listDirectoryPeople"
 
-        # Call the People API
-        print('List 10 connection names')
-        results = service.people().connections().list(
-            resourceName='people/me',
-            pageSize=10,
-            personFields='names,emailAddresses').execute()
-        connections = results.get('connections', [])
-
-        for person in connections:
-            names = person.get('names', [])
-            if names:
-                name = names[0].get('displayName')
-                print(name)
-    except HttpError as err:
-        print(err)
+    results = requests.get(
+        url,
+        params=params,
+        headers=header
+    )
+    print(results.json())
 
 
 if __name__ == '__main__':
